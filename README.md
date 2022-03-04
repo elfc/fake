@@ -7,3 +7,5 @@
 
 访问: http://127.0.0.1:9002/fake/example
 
+http://127.0.0.1:9002/fake/query
+
