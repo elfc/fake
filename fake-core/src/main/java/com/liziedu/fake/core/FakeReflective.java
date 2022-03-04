@@ -114,6 +114,14 @@ public class FakeReflective extends Fake {
 
                 // 请求域名赋给请求模版
                 md.template().domain(key.domain());
+
+                // 自定义请求头
+                if (key.headers() != null) {
+                    Map<String, String> headers = (Map<String, String>) key.headers();
+                    for (Map.Entry<String, String> entry : headers.entrySet()) {
+                        md.template().headers().put(entry.getKey(), entry.getValue());
+                    }
+                }
             }
 
             return result;
@@ -195,6 +203,24 @@ public class FakeReflective extends Fake {
                     queryParameter = QueryParameter.create(entry.getValue(), (String) entry.getKey());
                     metadata.template().addHeader(queryParameter);
                 }
+            }
+
+            if (metadata.bodyIndex() != null) {
+                /*
+                 * 处理参数自定义对象
+                 * argv[metadata.bodyIndex()]
+                 * 实际参数列表[自定义参数索引] = 自定义参数对象
+                 * 将对象转换为json对象
+                 * 添加到请求模版中
+                 */
+//                JSONObject jsonObject = (JSONObject) JSONObject.toJSON(argv[metadata.headersIndex()]);
+//
+//                for (Map.Entry entry : jsonObject.entrySet()) {
+//                    queryParameter = QueryParameter.create(entry.getValue(), (String) entry.getKey());
+//                    metadata.template().addHeader(queryParameter);
+//                }
+                metadata.template().body(
+                        JSONObject.toJSONString(argv[metadata.bodyIndex()]));
             }
 
             return metadata.template();

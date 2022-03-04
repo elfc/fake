@@ -1,5 +1,6 @@
 package liziedu.fake.spring.glue;
 
+import com.liziedu.fake.core.CustomHeaders;
 import com.liziedu.fake.core.FakeClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -178,6 +179,7 @@ class FakeClientsRegister
         factoryBean.setBeanFactory(beanFactory);
         factoryBean.setType(clazz);
         factoryBean.setDomain(getDomain(attributes));
+        factoryBean.setCustomHeaders(getCustomHeaders(attributes));
 
         BeanDefinitionBuilder definitionBuilder = BeanDefinitionBuilder
                 .genericBeanDefinition(clazz, () -> {
@@ -216,6 +218,22 @@ class FakeClientsRegister
 
         return (String) attributes.get("domain");
     }
+
+    /**
+     * 获取定制化的头信息
+     * @param attributes
+     * @return
+     */
+    private Class<? extends CustomHeaders> getCustomHeaders(Map<String, Object> attributes) {
+
+        Class<? extends CustomHeaders>[] headers = (Class<? extends CustomHeaders>[]) attributes.get("customHeaders");
+        if (headers.length == 0) {
+            return null;
+        }
+
+        return headers[0];
+    }
+
 
     @Override
     public void setEnvironment(Environment environment) {

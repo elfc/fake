@@ -33,6 +33,13 @@
             <artifactId>okhttp</artifactId>
             <version>4.9.3</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.mrmike/ok2curl -->
+        <dependency>
+            <groupId>com.github.mrmike</groupId>
+            <artifactId>ok2curl</artifactId>
+            <version>0.7.0</version>
+        </dependency>
     </dependencies>
 
 </project>

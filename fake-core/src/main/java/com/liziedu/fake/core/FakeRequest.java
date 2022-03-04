@@ -16,18 +16,39 @@ public class FakeRequest {
 
     private final Map<String, String> headers;
 
-    public FakeRequest(HttpMethod method, String url, Map<String, String> headers) {
+    private final String body;
+
+    public FakeRequest(HttpMethod method,
+                       String url,
+                       Map<String, String> headers,
+                       String body) {
         this.method = method;
         this.url = url;
         this.headers = headers;
+        this.body = body;
     }
 
-    public static FakeRequest create(HttpMethod method, String url, Map<String, String> headers) {
-        return new FakeRequest(method, url, headers);
+    public static FakeRequest create(HttpMethod method,
+                                     String url,
+                                     Map<String, String> headers,
+                                     String body) {
+        return new FakeRequest(method, url, headers, body);
     }
 
     public String url() {
         return url;
+    }
+
+    public String body() {
+        return body;
+    }
+
+    public HttpMethod method() {
+        return method;
+    }
+
+    public Map<String, String> headers() {
+        return headers;
     }
 
     @Override

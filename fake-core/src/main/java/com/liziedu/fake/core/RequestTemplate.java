@@ -50,6 +50,12 @@ public final class RequestTemplate {
      */
     private Map<String, Integer> variableNameToIndex;
 
+    /**
+     * post 请求body内容
+     * json body
+     */
+    private String body;
+
     private transient ParseUri parseUri;
 
     public RequestTemplate() {
@@ -132,12 +138,16 @@ public final class RequestTemplate {
         return builder.toString();
     }
 
+    public void body(String body) {
+        this.body = body;
+    }
+
     /**
      * 拿一个新的请求
      * @return
      */
     public FakeRequest request() {
-        return FakeRequest.create(this.method, this.url(), this.headers());
+        return FakeRequest.create(this.method, this.url(), this.headers(), this.body);
     }
 
     /**

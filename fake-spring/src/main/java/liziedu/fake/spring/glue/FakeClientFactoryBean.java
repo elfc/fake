@@ -1,5 +1,6 @@
 package liziedu.fake.spring.glue;
 
+import com.liziedu.fake.core.CustomHeaders;
 import com.liziedu.fake.core.Fake;
 import com.liziedu.fake.core.FakeTarget;
 import org.springframework.beans.BeansException;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.util.Map;
+
 /**
  * 创建spring bean 工厂类
  */
@@ -19,6 +22,8 @@ public class FakeClientFactoryBean implements FactoryBean<Object>,
     private Class<?> type;
 
     private String domain;
+
+    private Class<? extends CustomHeaders> customHeaders;
 
     private ApplicationContext applicationContext;
 
@@ -34,8 +39,13 @@ public class FakeClientFactoryBean implements FactoryBean<Object>,
     }
 
     <T> T getTarget() {
+        Map<String, String> headers = null;
+        if (customHeaders != null && beanFactory.getBean(customHeaders) != null) {
+            headers = beanFactory.getBean(customHeaders).getHeaders();
+        }
+
         return (T) new Fake.Builder().build()
-                .newInstance(new FakeTarget.DefaultTarget<>(type, domain));
+                .newInstance(new FakeTarget.DefaultTarget<>(type, domain, headers));
     }
 
     /**
@@ -72,8 +82,7 @@ public class FakeClientFactoryBean implements FactoryBean<Object>,
      */
     @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
-        applicationContext = context;
-        beanFactory = context;
+        this.applicationContext = context;
     }
 
     /**
@@ -92,5 +101,9 @@ public class FakeClientFactoryBean implements FactoryBean<Object>,
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public void setCustomHeaders(Class<? extends CustomHeaders> customHeaders) {
+        this.customHeaders = customHeaders;
     }
 }

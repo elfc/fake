@@ -1,5 +1,7 @@
 package com.liziedu.fake.core;
 
+import java.util.Map;
+
 public interface FakeTarget<T> {
 
     /**
@@ -14,14 +16,23 @@ public interface FakeTarget<T> {
      */
     String domain();
 
+    /**
+     * 自定义头信息
+     */
+    Map<String, String> headers();
+
     class DefaultTarget<T> implements FakeTarget<T> {
 
         private final Class<T> type;
         private final String domain;
+        private Map<String, String> headers;
 
-        public DefaultTarget(Class<T> type, String domain) {
+        public DefaultTarget(Class<T> type,
+                             String domain,
+                             Map<String, String> headers) {
             this.type = type;
             this.domain = domain;
+            this.headers = headers;
         }
 
         @Override
@@ -34,5 +45,9 @@ public interface FakeTarget<T> {
             return domain;
         }
 
+        @Override
+        public Map<String, String> headers() {
+            return headers;
+        }
     }
 }

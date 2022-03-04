@@ -17,7 +17,7 @@ public @interface FakeClient {
      * 请求token 类
      * @return
      */
-    Class<? extends AccessToken> accessToken() default AccessToken.class;
+    Class<? extends CustomHeaders>[] customHeaders() default {};
 
     /**
      * 请求地址

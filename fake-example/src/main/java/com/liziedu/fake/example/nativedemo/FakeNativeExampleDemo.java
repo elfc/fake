@@ -18,11 +18,11 @@ public class FakeNativeExampleDemo {
     private final FakeExampleService fakeExampleService;
 
     public FakeNativeExampleDemo() {
-        FakeTarget<FakeSearchService> target = new FakeTarget.DefaultTarget<>(FakeSearchService.class, "http://127.0.0.1:9001");
+        FakeTarget<FakeSearchService> target = new FakeTarget.DefaultTarget<>(FakeSearchService.class, "http://127.0.0.1:9001", null);
         this.fakeSearchService = new Fake.Builder().build().newInstance(target);
 
         FakeTarget<FakeExampleService> targetExample =
-                new FakeTarget.DefaultTarget<>(FakeExampleService.class, "http://127.0.0.1:9001");
+                new FakeTarget.DefaultTarget<>(FakeExampleService.class, "http://127.0.0.1:9001", null);
         this.fakeExampleService = new Fake.Builder().build().newInstance(targetExample);
     }
 

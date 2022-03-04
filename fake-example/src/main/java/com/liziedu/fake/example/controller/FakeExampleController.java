@@ -1,5 +1,6 @@
 package com.liziedu.fake.example.controller;
 
+import com.liziedu.fake.example.domain.FakeExampleQuery;
 import com.liziedu.fake.example.domain.FakeTestDTO;
 import com.liziedu.fake.example.domain.FakeTestPageResponse;
 import com.liziedu.fake.example.domain.FakeTestResponse;
@@ -28,5 +29,13 @@ public class FakeExampleController {
     @GetMapping("/example")
     public FakeTestResponse<FakeTestPageResponse<FakeTestDTO>> example() {
         return fakeExampleService.homePage();
+    }
+
+    @GetMapping("/query")
+    public FakeTestResponse<FakeTestDTO> searchByQuery() {
+        FakeExampleQuery query = new FakeExampleQuery();
+        query.setTest(1);
+
+        return fakeSearchService.searchForQuery(query);
     }
 }

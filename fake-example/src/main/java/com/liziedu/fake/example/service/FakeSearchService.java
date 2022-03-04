@@ -2,10 +2,11 @@ package com.liziedu.fake.example.service;
 
 import com.liziedu.fake.core.*;
 import com.liziedu.fake.example.domain.*;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FakeClient(domain = "http://127.0.0.1:9001")
+@FakeClient(domain = "http://127.0.0.1:9001", customHeaders = AccessToken.class)
 public interface FakeSearchService {
 
     /**
@@ -45,6 +46,6 @@ public interface FakeSearchService {
      * 搜索页
      * @return
      */
-    @FakeRequestMapping("/test/search_for_query")
+    @FakeRequestMapping(value = "/test/search_for_query", method = FakeRequest.HttpMethod.POST)
     FakeTestResponse<FakeTestDTO> searchForQuery(FakeExampleQuery query);
 }

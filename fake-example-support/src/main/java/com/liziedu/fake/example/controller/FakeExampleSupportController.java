@@ -1,13 +1,9 @@
 package com.liziedu.fake.example.controller;
 
-import com.liziedu.fake.example.domain.FakeTestDTO;
-import com.liziedu.fake.example.domain.FakeTestPageResponse;
-import com.liziedu.fake.example.domain.FakeTestProductDTO;
-import com.liziedu.fake.example.domain.FakeTestResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.liziedu.fake.example.domain.*;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +42,37 @@ public class FakeExampleSupportController {
         fakeTestPageResponse.setList(list);
 
         fakeTestResponse.setData(fakeTestPageResponse);
+
+        return fakeTestResponse;
+    }
+
+    @PostMapping("/search_for_query")
+    public FakeTestResponse<FakeTestDTO> searchByQuery(
+            HttpServletRequest request,
+            @RequestBody FakeExampleQuery query) {
+
+        System.out.println(request.getHeader("token"));
+
+        System.out.println("接受:" + query);
+        FakeTestResponse<FakeTestDTO> fakeTestResponse = new FakeTestResponse<>();
+
+        fakeTestResponse.setErrcode(200);
+        fakeTestResponse.setErrmsg("成功");
+
+
+        FakeTestDTO fakeTestDTO = new FakeTestDTO();
+        fakeTestDTO.setId(1L);
+
+        List<String> names = new ArrayList<>();
+        names.add("name1");
+        names.add("name2");
+        fakeTestDTO.setNames(names);
+
+        FakeTestProductDTO productDTO = new FakeTestProductDTO();
+        productDTO.setName("productDTO1");
+        fakeTestDTO.setProduct(productDTO);
+
+        fakeTestResponse.setData(fakeTestDTO);
 
         return fakeTestResponse;
     }

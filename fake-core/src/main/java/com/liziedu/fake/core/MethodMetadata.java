@@ -89,9 +89,17 @@ public class MethodMetadata {
         return template;
     }
 
+    public Integer bodyIndex() {
+        return bodyIndex;
+    }
+
     public MethodMetadata bodyIndex(int bodyIndex) {
         this.bodyIndex = bodyIndex;
         return this;
+    }
+
+    public Type bodyType() {
+        return bodyType;
     }
 
     public MethodMetadata bodyType(Type bodyType) {
